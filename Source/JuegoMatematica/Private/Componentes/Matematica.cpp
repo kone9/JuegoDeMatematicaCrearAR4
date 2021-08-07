@@ -30,25 +30,51 @@ void UMatematica::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+	
 }
 
-// void UMatematica::GenerarExpresion(int exponente, TipoDeCuenta tipoDecuentaParametro)
-// {
-// 	if(exponente == 0)
-// 	{
-// 		return;
-// 	}
+void UMatematica::GenerarExpresion(int exponente, TipoDeCuenta tipoDecuentaParametro)
+{
+	if(exponente == 0)
+	{
+		return;
+	}
 
-// 	if(exponente == 1)
-// 	{
-// 		numeroMinimo = 1;
-// 		numeroMaximo = 9;
-// 	}
+	if(exponente == 1)
+	{
+		rangoMinimo = 1;
+		rangoMaximo = 9;
+	}
+	else
+	{
+		rangoMinimo = FMath::Pow(10,exponente - 1);
+		rangoMaximo = FMath::Pow(10,exponente) - 1;
+		
+	}
 
-// 	numeroIzquierdo = FMath::RandRange(numeroMinimo,numeroMaximo);
-// 	numeroDerecho = FMath::RandRange(numeroMinimo,numeroMaximo);
+	numeroIzquierdo = FMath::RandRange(rangoMinimo,rangoMaximo);
+	numeroDerecho = FMath::RandRange(rangoMinimo,rangoMaximo);
 
-// 	operador = tipoDecuentaParametro;
+	operadorTipoDeCuenta = tipoDecuentaParametro;
 	
-// }
+}
+
+int UMatematica::ObtenerResultado()
+{
+	switch (operadorTipoDeCuenta)
+	{
+		case TipoDeCuenta::SUMA:
+			return numeroIzquierdo + numeroDerecho;
+		
+		case TipoDeCuenta::RESTA:
+			return numeroIzquierdo - numeroDerecho;
+		
+		case TipoDeCuenta::MULTIPLICACION:
+			return numeroIzquierdo * numeroDerecho;
+		
+		case TipoDeCuenta::DIVISION:
+			return numeroIzquierdo / numeroDerecho;
+	}
+	return 0;
+}
 

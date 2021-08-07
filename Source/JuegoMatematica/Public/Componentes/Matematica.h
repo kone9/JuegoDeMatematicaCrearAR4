@@ -7,15 +7,16 @@
 #include "Matematica.generated.h"
 
 
-//  UENUM(BlueprintType, Category = "TipoDeCuenta")
-//  enum class TipoDeCuenta : uint8
-//  {
-// 	SUMA             UMETA(DisplayName = "SUMA"),
-// 	RESTA            UMETA(DisplayName = "RESTA"),
-// 	MULTIPLICACION   UMETA(DisplayName = "MULTIPLICACION"),
-// 	DIVISION         UMETA(DisplayName = "DIVISION")
-//  }
-
+ UENUM(BlueprintType, Category = "TipoDeCuenta")
+ enum class TipoDeCuenta : uint8
+ {
+	SUMA             UMETA(DisplayName = "SUMA"),
+	RESTA            UMETA(DisplayName = "RESTA"),
+	MULTIPLICACION   UMETA(DisplayName = "MULTIPLICACION"),
+	DIVISION         UMETA(DisplayName = "DIVISION")
+ };
+ 
+//  enum class Suit { Diamonds, Hearts, Clubs, Spades };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class JUEGOMATEMATICA_API UMatematica : public UActorComponent
@@ -25,6 +26,15 @@ class JUEGOMATEMATICA_API UMatematica : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UMatematica();
+	
+	// enum class TipoDeCuenta 
+	// {
+	// 	SUMA,
+	// 	RESTA,
+	// 	MULTIPLICACION,
+	// 	DIVISION
+	// };
+	
 
 protected:
 	// Called when the game starts
@@ -35,19 +45,24 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:
-	UPROPERTY(VisibleAnywhere)
+	UFUNCTION(BlueprintCallable, Category="OperadoresMatematicos")
+	void GenerarExpresion(int exponente, TipoDeCuenta tipoDecuentaParametro);
+	UFUNCTION(BlueprintCallable, Category="OperadoresMatematicos")
+	int ObtenerResultado();	
+
+public:
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="OperadoresMatematicos")
 	int numeroIzquierdo;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="OperadoresMatematicos")
 	int numeroDerecho;
+
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	int numeroMinimo;
+	int rangoMinimo;
 	UPROPERTY(VisibleAnywhere)
-	int numeroMaximo;
+	int rangoMaximo;
 
-	// TipoDeCuenta operador;
+	TipoDeCuenta operadorTipoDeCuenta;
 
-	// void GenerarExpresion(int exponente, TipoDeCuenta tipoDecuentaParametro):
-		
 };
